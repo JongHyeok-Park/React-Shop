@@ -1,7 +1,7 @@
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import data from './data';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Main from './routes/Main';
@@ -10,9 +10,13 @@ import Event from './routes/Event';
 import One from './components/One';
 import Two from './components/Two';
 
+export let Context1 = createContext();
+
 function App() {
 
   let [shoes, setShoes] = useState(data);
+  let [stock] = useState([10, 11, 12]);
+  
   let navigate = useNavigate();
 
   return (
@@ -39,7 +43,11 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Main shoes={shoes} setShoes={setShoes} />} />
-        <Route path='/detail/:id' element={<Detail shoes={shoes}/>} />
+        <Route path='/detail/:id' element={
+          <Context1.Provider value={{stock}}>
+            <Detail shoes={shoes}/>
+          </Context1.Provider>
+        } />
         <Route path='/event' element={<Event />}>
           <Route path='one' element={<One />} />
           <Route path='two' element={<Two />} />
