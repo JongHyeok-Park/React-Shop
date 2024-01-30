@@ -1,11 +1,15 @@
 import { Table } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setName } from "../store";
 
 function Cart(props) {
   let products = useSelector(state => state.cart);
+  let user = useSelector(state => state.user)
 
   return (
     <div>
+      {user}의 장바구니
+
       <Table>
         <thead>
           <tr>
@@ -17,9 +21,9 @@ function Cart(props) {
         </thead>
         <tbody>
           {
-            products.map((item) => {
+            products.map((item, i) => {
               return (
-                <CartRow product={item} />
+                <CartRow product={item} key={i}/>
               );
             })
           }
@@ -31,12 +35,17 @@ function Cart(props) {
 }
 
 function CartRow(props) {
+  let dispatch = useDispatch();
+
   return (
     <tr>
       <td>{props.product.id}</td>
       <td>{props.product.name}</td>
       <td>{props.product.count}</td>
-      <td>안녕</td>
+      <td><button onClick={() => {
+        dispatch(setName("새로운 이름"));
+        console.log("누름");
+      }}>+</button></td>
     </tr>
   );
 }
