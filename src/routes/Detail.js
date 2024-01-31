@@ -2,11 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { Context1 } from "./../App.js"
+import { addToCart } from "../store/cartSlice.js";
+import { useDispatch } from "react-redux";
 
 function Detail(props) {
     let [inputVal, setInputVal] = useState("");
     let [tab, setTab] = useState(0);
     let [fade, setFade] = useState('');
+    let dispatch = useDispatch();
 
     useEffect(() => {
         let a = setTimeout(() => {
@@ -45,7 +48,14 @@ function Detail(props) {
                     <h4 className="pt-5">{shoe.title}</h4>
                     <p>{shoe.title}</p>
                     <p>{shoe.price}원</p>
-                    <button className="btn btn-danger">주문하기</button> 
+                    <button className="btn btn-danger" onClick={() => {
+                        let product = {
+                            id: shoe.id,
+                            name: shoe.title,
+                            count: 1
+                        }
+                        dispatch(addToCart(product));
+                    }}>주문하기</button> 
                 </div>
             </div>
             <Nav variant="tabs" defaultActiveKey="link0">

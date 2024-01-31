@@ -1,15 +1,19 @@
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setName } from "../store";
+import { increaseCount } from "../store/cartSlice";
+import { setAge } from "./../store/userSlice";
 
 function Cart(props) {
+  let dispatch = useDispatch();
   let products = useSelector(state => state.cart);
   let user = useSelector(state => state.user)
 
   return (
     <div>
-      {user}의 장바구니
-
+      {user.age}살 {user.name}의 장바구니
+      <button onClick={() => {
+        dispatch(setAge(5));
+      }}>버튼</button>
       <Table>
         <thead>
           <tr>
@@ -43,8 +47,8 @@ function CartRow(props) {
       <td>{props.product.name}</td>
       <td>{props.product.count}</td>
       <td><button onClick={() => {
-        dispatch(setName("새로운 이름"));
-        console.log("누름");
+        let productId = props.product.id;
+        dispatch(increaseCount(productId));
       }}>+</button></td>
     </tr>
   );
