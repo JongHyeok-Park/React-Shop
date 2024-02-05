@@ -29,6 +29,41 @@
   pointer-events: none;
 }
 
+.recent {
+  position: fixed;
+  right: 0;
+  top: 20%;
+  background-color: white;
+  border: 1px solid #aaa;
+}
+
+.recent-header {
+  background-color: #282c34;
+  color: white;
+  padding: 10px;
+  margin: 0;
+}
+
+.recent-products-container {
+  list-style: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 3px;
+}
+
+.recent-item {
+  border: 1px solid #eee;
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

@@ -1,7 +1,7 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import data from './data';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Main from './routes/Main';
@@ -14,6 +14,12 @@ import Two from './components/Two';
 export let Context1 = createContext();
 
 function App() {
+
+  useEffect(() => {
+    if(!(localStorage.getItem("recent"))) {
+      localStorage.setItem("recent", JSON.stringify([]));
+    }
+  }, [])
 
   let [shoes, setShoes] = useState(data);
   let [stock] = useState([10, 11, 12]);

@@ -1,11 +1,14 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import Card from '../components/Card';
+import Recent from '../components/Recent';
 import axios from 'axios';
 import { useState } from 'react';
 
 function Main(props) {
   let [loading, setLoading] = useState(false);
   let [moreCount, setMoreCount] = useState(2);
+  let recent = localStorage.getItem("recent");
+  recent = JSON.parse(recent);
 
     return (
       <div>
@@ -43,6 +46,9 @@ function Main(props) {
           }
           
         }}>더보기</button>
+        {
+          recent.length > 0 ? <Recent recent={recent}/> : null
+        }
       </div>
     )
 }

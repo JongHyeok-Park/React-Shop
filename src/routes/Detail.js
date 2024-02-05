@@ -11,10 +11,24 @@ function Detail(props) {
     let [fade, setFade] = useState('');
     let dispatch = useDispatch();
 
+    let {id} = useParams();
+    const shoe = props.shoes.find((item) => item.id === Number(id));
+
     useEffect(() => {
+        let recent = localStorage.getItem("recent");
+        recent = JSON.parse(recent);
+        
+        if (!(recent.includes(shoe.id))) {
+            recent.unshift(id);
+            let recentSet = new Set(recent);
+            let newRecent = [...recentSet];
+            localStorage.setItem("recent", JSON.stringify(newRecent));
+        }
+
         let a = setTimeout(() => {
             setFade('end');
         }, 10);
+
         return () => {
             clearTimeout(a);
             setFade('');
@@ -26,9 +40,6 @@ function Detail(props) {
     //         alert("그러지 마세요.");
     //     }
     // }, [inputVal])
-
-    let {id} = useParams();
-    const shoe = props.shoes.find((item) => item.id === Number(id));
 
     return (
         <div className={"container start " + fade}>
