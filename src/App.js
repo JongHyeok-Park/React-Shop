@@ -10,6 +10,8 @@ import Event from './routes/Event';
 import Cart from './routes/Cart';
 import One from './components/One';
 import Two from './components/Two';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
 export let Context1 = createContext();
 
@@ -23,8 +25,14 @@ function App() {
 
   let [shoes, setShoes] = useState(data);
   let [stock] = useState([10, 11, 12]);
-  
   let navigate = useNavigate();
+
+  let result = useQuery("getName", () => {
+    return axios.get("https://codingapple1.github.io/userdata.json")
+      .then((res) => {
+        return res.data;
+      })
+  })
 
   return (
     <div className="App">
@@ -35,6 +43,9 @@ function App() {
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
             <Nav.Link onClick={() => { navigate('/event') }}>Event</Nav.Link>
+          </Nav>
+          <Nav className='ms-auto name-space'>
+            { result.isLoading ? "로딩중" : result.data.name }
           </Nav>
         </Container>
       </Navbar>
