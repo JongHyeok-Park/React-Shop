@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import { Context1 } from "./../App.js"
 import { addToCart } from "../store/cartSlice.js";
 import { useDispatch } from "react-redux";
 
@@ -86,7 +85,6 @@ function Detail(props) {
 }
 
 function TabContent(props) {
-    let {stock} = useContext(Context1);
     let [fade, setFade] = useState('');
 
     useEffect(() => {
@@ -100,7 +98,7 @@ function TabContent(props) {
     }, [props.tab]);
 
     return <div className={"start " + fade}>
-        {[<div>{stock[0]}</div>, <div>내용1</div>, <div>내용2</div>][props.tab]}
+        {[<div>쓰지마</div>, <div>내용1</div>, <div>내용2</div>][props.tab]}
     </div>
     
 }

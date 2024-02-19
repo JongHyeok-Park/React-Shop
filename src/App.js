@@ -1,19 +1,20 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createContext, useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import data from './data';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Main from './routes/Main';
-import Detail from './routes/Detail';
+// import Detail from './routes/Detail';
+// import Cart from './routes/Cart';
 import Event from './routes/Event';
-import Cart from './routes/Cart';
 import One from './components/One';
 import Two from './components/Two';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-export let Context1 = createContext();
+const Detail = lazy(() => import('./routes/Detail'));
+const Cart = lazy(() => import('./routes/Cart'));
 
 function App() {
 
@@ -24,7 +25,6 @@ function App() {
   }, [])
 
   let [shoes, setShoes] = useState(data);
-  let [stock] = useState([10, 11, 12]);
   let navigate = useNavigate();
 
   let result = useQuery("getName", () => {
@@ -53,9 +53,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Main shoes={shoes} setShoes={setShoes} />} />
         <Route path='/detail/:id' element={
-          <Context1.Provider value={{stock}}>
-            <Detail shoes={shoes}/>
-          </Context1.Provider>
+          <Detail shoes={shoes}/>
         } />
         <Route path='/event' element={<Event />}>
           <Route path='one' element={<One />} />
